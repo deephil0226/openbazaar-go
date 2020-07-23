@@ -117,7 +117,7 @@ func (t *TxnsDB) GetAll(includeWatchOnly bool) ([]wallet.Txn, error) {
 	return ret, nil
 }
 
-func (t *TxnsDB) Delete(txid *chainhash.Hash) error {
+func (t *TxnsDB) Delete(txid string) error {
 	t.lock.Lock()
 	defer t.lock.Unlock()
 	_, err := t.db.Exec("delete from txns where txid=? and coin=?", txid.String(), t.coinType.CurrencyCode())
