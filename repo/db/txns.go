@@ -8,7 +8,6 @@ import (
 
 	"github.com/OpenBazaar/openbazaar-go/repo"
 	"github.com/OpenBazaar/wallet-interface"
-	"github.com/btcsuite/btcd/chaincfg/chainhash"
 )
 
 type TxnsDB struct {
@@ -120,7 +119,7 @@ func (t *TxnsDB) GetAll(includeWatchOnly bool) ([]wallet.Txn, error) {
 func (t *TxnsDB) Delete(txid string) error {
 	t.lock.Lock()
 	defer t.lock.Unlock()
-	_, err := t.db.Exec("delete from txns where txid=? and coin=?", txid.String(), t.coinType.CurrencyCode())
+	_, err := t.db.Exec("delete from txns where txid=? and coin=?", txid, t.coinType.CurrencyCode())
 	if err != nil {
 		return err
 	}
